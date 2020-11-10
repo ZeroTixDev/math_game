@@ -1,6 +1,7 @@
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
+use std::time::Instant;
 const QUESTIONS: f64 = 10.0;
 enum Operation {
     Add,
@@ -28,7 +29,11 @@ fn main() {
     let mut question_count: u32 = 0;
     let mut correct_answers: u32 = 0;
     let mut incorrect_answers: u32 = 0;
-    println!("Hello, this is a math game. There is {} questions you have to finish. Good luck!", QUESTIONS);
+    let before = Instant::now();
+    println!(
+        "Hello, this is a math game. There is {} questions you have to finish. Good luck!",
+        QUESTIONS
+    );
     loop {
         let number1 = rand::thread_rng().gen_range(1, 14);
         let number2 = rand::thread_rng().gen_range(1, 14);
@@ -40,7 +45,7 @@ fn main() {
         };
         let answer = calculate_answer(number1, number2, operation);
         println!("{}{}{}", number1, operation_string, number2);
-        /*println!("answer is {}", answer);*/
+        // println!("answer is {}", answer);
         let mut guess = String::new();
         io::stdin()
             .read_line(&mut guess)
@@ -48,6 +53,7 @@ fn main() {
         let guess: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
+                println!("Wrong!");
                 question_count += 1;
                 incorrect_answers += 1;
                 if question_count >= QUESTIONS as u32 {
@@ -91,7 +97,12 @@ fn main() {
     }
     let accuracy: f64 = correct_answers as f64 / QUESTIONS * 100.0;
     println!(
-        "Accuracy: {}/{} ({}%), Correct Answers: {}, Incorrect Answers: {}",
-        correct_answers, QUESTIONS, accuracy, correct_answers, incorrect_answers
+        "Accuracy: {}/{} ({}%), Correct Answers: {}, Incorrect Answers: {}, Time: {:?} seconds",
+        correct_answers,
+        QUESTIONS,
+        accuracy,
+        correct_answers,
+        incorrect_answers,
+        before.elapsed().as_secs()
     )
 }
