@@ -40,7 +40,7 @@ fn main() {
         };
         let answer = calculate_answer(number1, number2, operation);
         println!("{}{}{}", number1, operation_string, number2);
-        println!("answer is {}", answer);
+        /*println!("answer is {}", answer);*/
         let mut guess = String::new();
         io::stdin()
             .read_line(&mut guess)
