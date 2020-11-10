@@ -2,7 +2,7 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 use std::time::Instant;
-const QUESTIONS: f64 = 10.0;
+const QUESTIONS: f64 = 15.0;
 enum Operation {
     Add,
     Sub,
@@ -85,6 +85,7 @@ fn main() {
                 }
             }
             Ordering::Equal => {
+                println!("Correct!");
                 question_count += 1;
                 correct_answers += 1;
                 if question_count >= QUESTIONS as u32 {
